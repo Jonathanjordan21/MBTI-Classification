@@ -29,4 +29,7 @@ Each row consists of two columns :
 1. a string of 50 latest posts of a person, separated by "|||" characters.
 2. the MBTI Personality Type of the person. 
 
+## Colab Experiments 
+https://colab.research.google.com/drive/1s5CgEJFQuskF4HL4x4DMV8Ik4xzqJ-ey?usp=sharing
+
 ## End to End Machine Learning Deployment with Scikit Learn and Flask REST API
