@@ -29,13 +29,13 @@ class DataTransformation:
             self.config = config
         else :
             self.config = DataTransformationConfig(
-                test_size, shuffle, sampling, ingestion_config
+                test_size, shuffle, sampling, ingestion_config=ingestion_config
             )
     
     def transform(self):
         try:
             logging.info("Start Data Transformation...")
-            df = pd.read_csv(self.ingestion_config.cleaned_dir)
+            df = pd.read_csv(self.config.ingestion_config.cleaned_data_path)
             if 'under' in self.config.sampling:
                 df = self.undersample(df)
             elif 'over' in self.config.sampling:
@@ -44,11 +44,11 @@ class DataTransformation:
                 df[['type','post']], test_size=self.config.test_size, shuffle=self.config.shuffle
             )
             logging.info("Train and Test data has been created")
-            train_set.to_csv(self.train_data_path, index=False, header=True)
-            test_set.to_csv(self.test_data_path, index=False, header=True)
+            train_set.to_csv(self.config.train_data_path, index=False, header=True)
+            test_set.to_csv(self.config.test_data_path, index=False, header=True)
             logging.info("Data Transformation Complete")
 
-            return self.ingestion_config.train_data_path, self.ingestion_config.test_data_path
+            return self.config.train_data_path, self.config.test_data_path
 
         except Exception as err:
             CustomException(err, sys)

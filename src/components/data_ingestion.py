@@ -1,8 +1,10 @@
-import os, sys, urllib
+import os, sys
 from src.exception import CustomException
 from src.logger import logging
 import pandas as pd
 from sklearn.model_selection import train_test_split
+
+import urllib.request
 
 from dataclasses import dataclass
 
@@ -10,8 +12,6 @@ from dataclasses import dataclass
 class DataIngestionConfig:
     raw_data_path:str = os.path.join('artifacts', 'raw.csv')
     cleaned_data_path:str = os.path.join('artifacts', 'cleaned.csv')
-
-
 
 class DataIngestion:
     def __init__(self):
@@ -21,7 +21,7 @@ class DataIngestion:
     def ingestion(self):
         logging.info("Processing Data Ingestion...")
         try :
-            self.download_dataset(self.ingestion_config.raw_data_path)
+            self.download_dataset()
             df=pd.read_csv(self.ingestion_config.raw_data_path)
             df=self.clean_raw_data(df)
             df.to_csv(self.ingestion_config.cleaned_data_path, index=False, header=True)
@@ -31,11 +31,12 @@ class DataIngestion:
         except Exception as err:
             raise CustomException(err, sys)
     
-    def download_dataset(self):
-        if not os.path.exists(self.ingestion_config.raw_data_path):
-            logging.info("Downloading the Dataset...")
+    def download_dataset(self, force_download=False):
+        if not os.path.exists(self.ingestion_config.raw_data_path) and not force_download: 
             url = 'https://raw.githubusercontent.com/dashascience/-MBTI-Myers-Briggs-Personality-Type-Dataset/master/mbti_1.csv'
-            os.mkdir('artifacts')
+            os.makedirs(os.path.dirname(self.ingestion_config.raw_data_path), exist_ok=True)
+
+            logging.info("Downloading the Dataset...")
             urllib.request.urlretrieve(url, self.ingestion_config.raw_data_path)
             logging.info("Dataset has been successfully downloaded")
         else :
@@ -65,6 +66,7 @@ class DataIngestion:
             df_new['post'] = df_new['post'].map(lambda x : re.sub(filter_chars, "", x))
 
             logging.info("Raw Data has been successfully cleaned")
+            return df_new
 
         except Exception as err:
             raise CustomException(err, sys)

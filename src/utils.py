@@ -1,5 +1,6 @@
 import pickle,sys
 from src.exception import CustomException
+
 def save_object(obj, path):
     try :
         with open(path, 'wb') as f:
