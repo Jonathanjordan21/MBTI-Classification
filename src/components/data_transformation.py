@@ -9,8 +9,15 @@ from sklearn.model_selection import train_test_split
 
 
 class DataTransformationConfig:
-    def __init__(self, test_size=0.05, shuffle=False, sampling='undersample', ingestion_config=None):
+    def __init__(
+        self, test_size=0.05, shuffle=False, sampling='undersample', 
+        train_data_path=os.path.join('artifacts', 'train.csv'),
+        test_data_path=os.path.join('artifacts', 'test.csv'),
+        ingestion_config=None
+    ):
         self.test_size, self.shuffle, self.sampling = test_size, shuffle, sampling
+        self.train_data_path= train_data_path
+        self.test_data_path = test_data_path
         self.ingestion_config = ingestion_config
 
 class DataTransformation:
@@ -37,8 +44,8 @@ class DataTransformation:
                 df[['type','post']], test_size=self.config.test_size, shuffle=self.config.shuffle
             )
             logging.info("Train and Test data has been created")
-            train_set.to_csv(self.ingestion_config.train_data_path, index=False, header=True)
-            test_set.to_csv(self.ingestion_config.test_data_path, index=False, header=True)
+            train_set.to_csv(self.train_data_path, index=False, header=True)
+            test_set.to_csv(self.test_data_path, index=False, header=True)
             logging.info("Data Transformation Complete")
 
             return self.ingestion_config.train_data_path, self.ingestion_config.test_data_path
