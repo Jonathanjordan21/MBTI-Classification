@@ -100,7 +100,7 @@ class ModelTrainer:
             logging.info(f"Training {model_name} has Completed, Prepare for Testing")
 
             test_data = pd.read_csv(self.trainer_config.test_data_path)
-            predicted = pipeline_clf.predict(test_data['post'], test_data['type'])
+            predicted = pipeline_clf.predict(test_data['post'])
 
             logging.info(f"Testing {model_name} has Completed. Prepare for Model Evaluation")
 
