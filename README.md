@@ -1,6 +1,7 @@
 # MBTI-Classification
 
-The Myers Briggs Type Indicator (MBTI) consists of 16 Classes of Each Personality Type.
+The Myers Briggs Type Indicator (MBTI) consists of 16 Classes of Each Personality Type.<br>
+![Kiku](media/mbti_desc.jpg)
 1. INFP
 2. INFJ
 3. INTP
@@ -19,6 +20,7 @@ The Myers Briggs Type Indicator (MBTI) consists of 16 Classes of Each Personalit
 16. ESTJ
 
 Each Personality type is diverged within Four Axes :
+![Kiku](media/mbti_axes.jpg)
 1. Introversion (I) – Extroversion (E) 
 2. Intuition (N) – Sensing (S) 
 3. Thinking (T) – Feeling (F) 
